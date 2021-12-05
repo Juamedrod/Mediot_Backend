@@ -5,9 +5,10 @@ const router = require('express').Router();
 const User = require('../../models/user.model');
 const bcrypt = require('bcryptjs');
 const { createToken } = require('../../utils');
+const { checkToken, checkRole } = require('../../middlewares/middlewares');
 
 
-router.get('/', async (req, res) => {
+router.get('/', checkToken, checkRole('admin'), async (req, res) => {
     const devices = await User.find();
     res.json(devices);
 });
@@ -38,11 +39,11 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', checkToken, async (req, res) => {
     res.send('user llego mostro');
 });
 
-router.put('/', async (req, res) => {
+router.put('/', checkToken, async (req, res) => {
     res.send('user llego mostro');
 });
 
