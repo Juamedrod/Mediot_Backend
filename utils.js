@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken');
 
 const createToken = (user, expireTime) => {
     const obj = {
-        userId: user.id,
-        userName: user.name
+        id: user.id,
+        name: user.name
     }
     return jwt.sign(obj, process.env.SECRET_KEY, { expiresIn: expireTime });
 };

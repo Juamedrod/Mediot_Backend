@@ -27,12 +27,11 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
-        console.log(user);
-        if (!user) return res.status(501).json({ error: 'Authentication error, credentials are not correct' });
+        if (!user) return res.status(401).json({ error: 'Authentication error, credentials are not correct' });
         if (bcrypt.compareSync(req.body.password, user.password)) {
             return res.json({ token: createToken(user, '5d') });
         } else {
-            return res.status(501).json({ error: 'Authentication error, credentials are not correct' });
+            return res.status(401).json({ error: 'Authentication error, credentials are not correct' });
         }
     } catch (error) {
         res.json({ error: error.message });
