@@ -8,7 +8,7 @@ const checkToken = async (req, res, next) => {
     try {
         const token = req.headers.auth;
         let tokenVerification = (jwt.verify(token, process.env.SECRET_KEY,));
-        let user = await User.findById(tokenVerification.usuarioId);
+        let user = await User.findById(tokenVerification.id);
         req.user = user;
     } catch (error) {
         return res.status(401).json({ error: error.message });

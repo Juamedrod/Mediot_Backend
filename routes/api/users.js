@@ -8,14 +8,12 @@ const { createToken } = require('../../utils');
 const { checkToken, checkRole } = require('../../middlewares/middlewares');
 
 
-router.get('/', checkToken, checkRole('admin'), async (req, res) => {
-    const devices = await User.find();
-    res.json(devices);
+router.get('/', checkToken, (req, res) => {
+    res.json(req.user);
 });
 
 //endpoint to verify the good signature of the token itself.
 router.get('/checkin', checkToken, async (req, res) => {
-    console.log('token correcto');//BORRAR BORRAR BORRAR
     res.json({ auth: true });
 });
 
@@ -45,11 +43,22 @@ router.post('/login', async (req, res) => {
 });
 
 router.delete('/', checkToken, async (req, res) => {
-    res.send('user llego mostro');
+    try {
+        await User.findOneAndRemove(req.user.id);
+        res.json({ remove: true });
+    } catch (error) {
+        res.json({ remove: false });
+
+    }
 });
 
 router.put('/', checkToken, async (req, res) => {
-    res.send('user llego mostro');
+    try {
+        const user = await User.findByIdAndUpdate(req.user.id, req.body, { new: true });
+        res.json(user)
+    } catch (error) {
+        res.json({ error: error.message });
+    }
 });
 
 module.exports = router;
