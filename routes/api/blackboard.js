@@ -27,7 +27,7 @@ router.put('/', async (req, res) => {
         console.log(req.body);
         const display = await Display.findOneAndUpdate({ dId: req.body.dId }, { arrConfig: req.body, userId: req.user.id }, { new: true });
         console.log(display);
-        res.json(display)
+        res.json(display);
     } catch (error) {
         res.json({ error: error.message });
     }
