@@ -24,8 +24,8 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate({ dId: req.body.dId }, req.body, { new: true });
-        res.json(user)
+        const device = await Device.findByIdAndUpdate({ dId: req.body.dId }, req.body, { new: true });
+        res.json(device)
     } catch (error) {
         res.json({ error: error.message });
     }
