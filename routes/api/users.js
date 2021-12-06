@@ -48,7 +48,6 @@ router.delete('/', checkToken, async (req, res) => {
         res.json({ remove: true });
     } catch (error) {
         res.json({ remove: false });
-
     }
 });
 

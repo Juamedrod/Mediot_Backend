@@ -9,7 +9,7 @@ const deviceSchema = new Schema({
     description: { type: String, required: true },
     nickname: { type: String, required: true },
     variables: [String],
-    createdAt: Date
+    createdAt: { type: Date, default: Date.now() }
 })
 
 deviceSchema.plugin(uniqueValidator, { message: 'Device Id have to be unique, try again.' });
