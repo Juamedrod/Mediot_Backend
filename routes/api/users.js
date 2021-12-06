@@ -13,6 +13,12 @@ router.get('/', checkToken, checkRole('admin'), async (req, res) => {
     res.json(devices);
 });
 
+//endpoint to verify the good signature of the token itself.
+router.get('/checkin', checkToken, async (req, res) => {
+    console.log('token correcto');//BORRAR BORRAR BORRAR
+    res.json({ auth: true });
+});
+
 router.post('/register', async (req, res) => {
     try {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
