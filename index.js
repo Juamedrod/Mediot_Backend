@@ -31,8 +31,6 @@ app.use(cors());
  */
 app.use('/api', apiRouter);
 
-
-
 /**
  * APP listening
  */

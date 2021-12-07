@@ -4,7 +4,7 @@
 const router = require('express').Router();
 const User = require('../../models/user.model');
 const bcrypt = require('bcryptjs');
-const { createToken } = require('../../utils');
+const { createToken, writeLog } = require('../../utils');
 const { checkToken, checkRole } = require('../../middlewares/middlewares');
 
 
@@ -20,8 +20,9 @@ router.get('/checkin', checkToken, async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
-        const response = await User.create(req.body);
-        const token = createToken(response, '5d');
+        const user = await User.create(req.body);
+        const token = createToken(user, '5d');
+        writeLog(user.id, 'register', 'register');
         res.json({ token })
     } catch (error) {
         res.json({ error: error.message });
@@ -33,6 +34,7 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email: req.body.email });
         if (!user) return res.status(401).json({ error: 'Authentication error, credentials are not correct' });
         if (bcrypt.compareSync(req.body.password, user.password)) {
+            writeLog(user.id, 'login', 'login');
             return res.json({ token: createToken(user, '5d') });
         } else {
             return res.status(401).json({ error: 'Authentication error, credentials are not correct' });

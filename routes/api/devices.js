@@ -3,6 +3,7 @@
  */
 const router = require('express').Router();
 const Device = require('../../models/device.model');
+const { writeLog } = require('../../utils');
 
 router.get('/', async (req, res) => {
     try {
@@ -16,6 +17,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newDevice = await Device.create({ ...req.body, userId: req.user.id });
+        writeLog(req.user.id, 'newDevice', newDevice.dId);
         res.json(newDevice);
     } catch (error) {
         res.json({ error: error.message });
