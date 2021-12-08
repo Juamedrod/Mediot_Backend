@@ -16,7 +16,8 @@ router.get('/:dId', checkToken, async (req, res) => {
 
 router.post('/:dId', async (req, res) => {
     try {
-        console.log(req.body);
+        req.body.iat = new Date();
+        console.log(req.body);//DELETEEEEE
         const data = await Data.create(req.body);
         res.json({ res: 'Exito!' });
     } catch (error) {
