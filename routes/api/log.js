@@ -1,3 +1,6 @@
+/**
+ * ROUTE: api/log
+ */
 const router = require('express').Router();
 const { readLog } = require('../../utils');
 
