@@ -14,6 +14,15 @@ router.get('/:dId', checkToken, async (req, res) => {
     }
 });
 
+router.get('/:dId/:limit', checkToken, async (req, res) => {
+    try {
+        const data = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(parseInt(req.params.limit));
+        res.json(data);
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
+
 router.post('/:dId', async (req, res) => {
     try {
         req.body.iat = new Date();
@@ -24,5 +33,7 @@ router.post('/:dId', async (req, res) => {
         res.json({ error: error.message });
     }
 });
+
+
 
 module.exports = router;
