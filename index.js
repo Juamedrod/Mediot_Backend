@@ -21,6 +21,7 @@ const app = express();
 /**
  * Express Config
  */
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
