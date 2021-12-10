@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
     try {
-        const device = await Device.findByIdAndUpdate({ dId: req.body.dId }, req.body, { new: true });
+        const device = (await Device.findOneAndUpdate({ dId: req.body.dId }, req.body, { new: true }));
         res.json(device)
     } catch (error) {
         res.json({ error: error.message });
@@ -42,7 +42,6 @@ router.post('/checkid', async (req, res) => {
             res.json({ avaliable: false });
         }
     } catch (error) {
-        console.log(error);
         res.json({ avaliable: false });
     }
 });
