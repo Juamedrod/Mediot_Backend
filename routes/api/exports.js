@@ -11,13 +11,14 @@ const fs = require('fs');
 router.get('/:dId/:var', checkToken, async (req, res) => {
     try {
         const random = Math.random() * 90000;
-        const snapshot = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(5);
+        console.log(req.query.limit);
+        const snapshot = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(parseInt(req.query.limit));
         let csv = await createCSV(snapshot, ['_id', 'dId', 'iat', `variables.${req.params.var}`], true);
         const writeStream = fs.createWriteStream(`./public/csv/${req.params.dId}${random}.csv`, { flags: 'w' });
         writeStream.write(csv);
         writeStream.end();
         res.json({ url: `csv/${req.params.dId}${random}.csv` });
-        setTimeout(async function () {
+        new setTimeout(async function () {
             try {
                 fs.rm(`./public/csv/${req.params.dId}${random}.csv`, (error) => {
                     if (error) throw error;
@@ -25,7 +26,7 @@ router.get('/:dId/:var', checkToken, async (req, res) => {
             } catch (error) {
                 res.json({ error: error.message });
             }
-        }, 30000);
+        }, 20000);
     } catch (error) {
         res.json({ error: error.message });
     }
