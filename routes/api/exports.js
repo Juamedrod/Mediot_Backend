@@ -8,7 +8,7 @@ const Device = require('../../models/device.model');
 const { createCSV } = require('../../utils');
 const fs = require('fs');
 
-router.get('/:dId/:var', checkToken, async (req, res) => {
+router.get('/:dId/:var', async (req, res) => {
     try {
         const random = Math.random() * 90000;
         console.log(req.query.limit);
