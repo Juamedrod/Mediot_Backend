@@ -1,8 +1,8 @@
 /**
- * ROUTE: api/log
+ * ROUTE: api/logs
  */
 const router = require('express').Router();
-const { readLog } = require('../../utils');
+const { readLog, writeLog } = require('../../utils');
 
 router.get('/', async (req, res) => {
     try {
@@ -12,6 +12,18 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error al leer el log' });
+    }
+});
+
+router.post('/', async (req, res) => {
+    try {
+        //recuerda que el id viene en req.user.id
+        console.log(req.body);
+        writeLog(req.user.id, req.body.key, req.body.value);
+        res.json({ success: 'success' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error al escribir el log' });
     }
 });
 
