@@ -3,6 +3,7 @@
  */
 const router = require('express').Router();
 const Data = require('../../models/data.model');
+const BooleanToggle = require('../../models/booleanToggle.model');
 const { checkToken } = require('../../middlewares/middlewares');
 
 router.get('/:dId', checkToken, async (req, res) => {
@@ -26,14 +27,52 @@ router.get('/:dId/:limit', checkToken, async (req, res) => {
 router.post('/:dId', async (req, res) => {
     try {
         req.body.iat = new Date();
-        console.log(req.body);//DELETEEEEE
         const data = await Data.create(req.body);
-        res.json({ res: 'Exito!' });
+        res.json({ res: 'Success!' });
     } catch (error) {
         res.json({ error: error.message });
     }
 });
 
+/**
+ *  Create an endpoint for a boolean switch variable
+ */
+router.post('/boolean/:dId/:variable', async (req, res) => {
+    try {
+        const response = await BooleanToggle.findOne({ dId: req.params.dId, varName: req.params.variable });
+        if (response) return res.json({ res: 'Already Exist in DB' });
+        req.body.iat = new Date();
+        await BooleanToggle.create({ ...req.body, dId: req.params.dId, varName: req.params.variable });
+        res.json({ res: 'Success!' });
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
 
+/**
+ * Update the value of the switch variable
+ */
+router.put('/boolean/:dId/:variable', async (req, res) => {
+    try {
+        req.body.iat = new Date();
+        await BooleanToggle.findOneAndUpdate({ dId: req.params.dId, varName: req.params.variable }, req.body);
+        res.json({ res: 'Success!' });
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
+
+/**
+ * Retrieve the state of the boolean Variable
+ */
+router.get('/boolean/:dId/:variable', async (req, res) => {
+    try {
+        req.body.iat = new Date();
+        const booleanToggle = await BooleanToggle.findOne({ dId: req.params.dId, varName: req.params.variable });
+        res.send(booleanToggle.varValue);
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
 
 module.exports = router;

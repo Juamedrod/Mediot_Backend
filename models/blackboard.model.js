@@ -10,6 +10,7 @@ const displayConfigSchema = new Schema({
     refreshInterval: { type: Number },
     variableId: { type: String },
     variableName: { type: String },
+    unit: { type: String },
     color: { type: String },
     backgroundColorRGBA: { type: String },
     chartName: { type: String },
