@@ -7,7 +7,7 @@ const devices = async (ctx) => {
         const arrDevicesNameAndID = []
         if (devices.length == 0) return ctx.reply('you have not devices registered in Mediot');
         for (let device of devices) {
-            await ctx.replyWithHTML(`Your device name is <strong>${device.nickname}</strong> with and dId: <strong>${device.dId}</strong>`);
+            await ctx.replyWithHTML(`Your device name is <strong>${device.nickname}</strong> with a dId: <strong>${device.dId}</strong>`);
         }
     } catch (error) {
         ctx.reply('Something went wrong with your request')
