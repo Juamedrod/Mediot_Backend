@@ -57,4 +57,16 @@ const readLog = (id) => {
     });
 }
 
-module.exports = { createToken, writeLog, readLog, createCSV };
+/**
+ * Is user registered in DB with a valid userID?
+ * @param {string} idTelegram telegram Id
+ * @returns {boolean}
+ */
+const userIsRegisteredInTelegram = async (idTelegram) => {
+    if (await TelegramUser.exists({ idTelegram: idTelegram })) {
+        return true;
+    }
+    return false;
+}
+
+module.exports = { createToken, writeLog, readLog, createCSV, userIsRegisteredInTelegram };

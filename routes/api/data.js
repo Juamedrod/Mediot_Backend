@@ -6,6 +6,7 @@ const Data = require('../../models/data.model');
 const BooleanToggle = require('../../models/booleanToggle.model');
 const { checkToken } = require('../../middlewares/middlewares');
 
+/** Last Snapshot */
 router.get('/:dId', checkToken, async (req, res) => {
     try {
         const data = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(1);

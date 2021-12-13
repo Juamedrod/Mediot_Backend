@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.14",
     "mongoose-unique-validator": "^3.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "telegraf": "^4.5.2"
   }
 }

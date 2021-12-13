@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const { bot } = require('./bot');
 
 /**
  * Global Configs
@@ -17,6 +18,11 @@ const apiRouter = require('./routes/api');
  * APP initialization
  */
 const app = express();
+
+/**
+ * Attach bot webhook to the app.
+ */
+app.use(bot.webhookCallback('/secret-path'));
 
 /**
  * Express Config
