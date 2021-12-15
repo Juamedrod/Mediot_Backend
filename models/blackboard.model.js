@@ -19,7 +19,8 @@ const displayConfigSchema = new Schema({
     borderWidth: { type: Number },
     colors: { type: [String] },
     scaleWithHover: { type: Number },
-    createdAt: { type: Date, default: Date.now() }
+    createdAt: { type: Date, default: Date.now() },
+    icon: { type: String }
 })
 
 const blackboardSchema = new Schema({
