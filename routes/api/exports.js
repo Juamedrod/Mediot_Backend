@@ -20,7 +20,7 @@ router.get('/:dId/:var', async (req, res) => {
         res.json({ url: `csv/${req.params.dId}${random}.csv` });
         new setTimeout(async function () {
             try {
-                fs.rm(`./public/csv/${req.params.dId}${random}.csv`, (error) => {
+                fs.rm(`/csv/${req.params.dId}${random}.csv`, (error) => {//./public
                     if (error) throw error;
                 });
             } catch (error) {
