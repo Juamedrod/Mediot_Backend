@@ -15,6 +15,7 @@ router.get('/:dId/:var', async (req, res) => {
         const snapshot = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(parseInt(req.query.limit));
         let csv = await createCSV(snapshot, ['_id', 'dId', 'iat', `variables.${req.params.var}`], true);
         console.log('He llegado aquí');
+        // const writeStream = fs.createWriteStream(`./public/csv/${req.params.dId}${random}.csv`, { flags: 'w' });
         const writeStream = fs.createWriteStream(`./public/csv/${req.params.dId}${random}.csv`, { flags: 'w' });
         console.log('he creado el fichero');
         writeStream.write(csv);
