@@ -14,13 +14,13 @@ router.get('/:dId/:var', async (req, res) => {
         console.log(req.query.limit);
         const snapshot = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(parseInt(req.query.limit));
         let csv = await createCSV(snapshot, ['_id', 'dId', 'iat', `variables.${req.params.var}`], true);
-        const writeStream = fs.createWriteStream(`./public/csv/${req.params.dId}${random}.csv`, { flags: 'w' });
+        const writeStream = fs.createWriteStream(`../../public/csv/${req.params.dId}${random}.csv`, { flags: 'w' });
         writeStream.write(csv);
         writeStream.end();
         res.json({ url: `csv/${req.params.dId}${random}.csv` });
         new setTimeout(async function () {
             try {
-                fs.rm(`/csv/${req.params.dId}${random}.csv`, (error) => {//./public
+                fs.rm(`./public/csv/${req.params.dId}${random}.csv`, (error) => {
                     if (error) throw error;
                 });
             } catch (error) {
