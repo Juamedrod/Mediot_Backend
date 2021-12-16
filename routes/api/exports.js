@@ -10,7 +10,7 @@ const fs = require('fs');
 
 router.get('/:dId/:var', async (req, res) => {
     try {
-        const random = Math.random() * 90000;
+        const random = Math.trunc(Math.random() * 90000);
         console.log(req.query.limit);
         const snapshot = await Data.find({ dId: req.params.dId }).sort({ _id: -1 }).limit(parseInt(req.query.limit));
         let csv = await createCSV(snapshot, ['_id', 'dId', 'iat', `variables.${req.params.var}`], true);
